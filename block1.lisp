@@ -50,14 +50,14 @@
 (defun numberr(lst)
       (cond
          ((null lst) nil)
-         ((cons (number-string (cons (car lst)())) (numberr (cdr lst))))
+         (t(cons (number-string (cons (car lst)())) (numberr (cdr lst))))
        )
 )
 
 (defun number-length(lst n)
       (cond
           ((<= lst 0) (- n 1))
-         ((number-length (/ (- lst (rem lst 10)) 10) (+ 1 n)))
+         (t(number-length (/ (- lst (rem lst 10)) 10) (+ 1 n)))
        )
 )
 (print(numberr '(1452 1231 300 755 836 256 746 216 456 121 19 16 20 22 75 38 74 31 62 1 2 3)))
@@ -115,7 +115,7 @@
 (defun level-list(lst)
       (cond
          ((null(cdr  lst)) (cons (car lst) ()))
-          ((list (level-list (cdr lst)) (car lst) ))
+         (t(list (level-list (cdr lst)) (car lst) ))
        )
 )
 (print(level-list '( 1 2  3 4 5 6  7 8  9 )))                
@@ -135,7 +135,7 @@
       (cond
          ((null lst) nil)
           ((member (car lst) (cdr lst))(list-set(cdr lst)))
-          ((cons (car lst) (list-set(cdr lst))))
+          (t(cons (car lst) (list-set(cdr lst))))
        )
 )
 
