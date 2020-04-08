@@ -1,3 +1,83 @@
+
+;№9
+;Определите функцию, разделяющую исходный список на два подсписка. 
+;В первый из них должны попасть элементы с нечетными номерами, во второй — элементы с четными номерами.
+(defun split(lst)
+      (cond
+         ((null lst) '(() ()))
+         (t((lambda (x y z)
+               (cons (cons x (car z)) 
+                  (cons      
+                      (cond
+                         ((null y) (cadr z))
+                         (t(cons y (cadr z))))
+                  ())
+               )
+            ) (car lst) (cadr lst) (split(cddr lst)))
+          )
+       )
+)
+
+(print(split '( 10 2 4 2)))
+(print(split '( 9 7 3 )))
+(print(split '( 1  3 2 3 2 2 3 4 5)))
+(print(split '( 10 10 10 9 7 2 3 4 9 4 8 )))
+
+;№18
+;Определите предикат, проверяющий, является ли аргумент одноуровневым списком.
+(defun check-list(lst)
+      (cond
+         ((null lst) t)
+          ((atom (car lst))(check-list(cdr lst)))
+          (t(print 'False))
+       )
+)
+(print(check-list '((2))))
+(print(check-list '(2 (8) ((7)))))
+(print(check-list '(2 8 7)))
+
+;№21 
+;Определите функцию, удаляющую из списка первое вхождение данного элемента на верхнем уровне.
+(defun del-elem(lst)
+      (cond
+         ((null lst)  nil)
+          (t(cdr lst))
+       )
+)
+(print(del-elem '(2 8 5 (3))))
+
+;№22
+;Определите функцию, которая обращает список (а b с) и разбивает его на уровни (((с) b) а).
+(defun level-list(lst)
+      (cond
+         ((null(cdr  lst)) (cons (car lst) ()))
+         (t(list (level-list (cdr lst)) (car lst) ))
+       )
+)
+(print(level-list '( 1 2  3 4 5 6  7 8  9 )))                
+(print(level-list '( 1  2 )))
+
+;№33
+;Определите функцию МНОЖЕСТВО, преобразующую список в множество.
+(defun list-line(lst)
+      (cond
+         ((null lst) nil)
+          ((listp (car lst))(append (list-line(car lst)) (list-line(cdr lst)) ))
+          (t(cons (car lst) (list-line(cdr lst))))
+       )
+)
+
+(defun list-set(lst)
+      (cond
+         ((null lst) nil)
+          ((member (car lst) (cdr lst))(list-set(cdr lst)))
+          (t(cons (car lst) (list-set(cdr lst))))
+       )
+)
+
+(print(list-set (list-line '( 1 2  3 4 5 6  7 8  9 8 7 6 5 4 3 2 1))))
+(print(list-set (list-line '((3) 2 (8) ((7)) (3) 8))))
+                
 ;№6
 ;Определите функцию, переводящую список чисел в список соответствующих им названий.
 (defun number-string(lst)
@@ -62,31 +142,6 @@
 )
 (print(numberr '(1452 1231 300 755 836 256 746 216 456 121 19 16 20 22 75 38 74 31 62 1 2 3)))
 
-;№9
-;Определите функцию, разделяющую исходный список на два подсписка. 
-;В первый из них должны попасть элементы с нечетными номерами, во второй — элементы с четными номерами.
-(defun split(lst)
-      (cond
-         ((null lst) '(() ()))
-         (t((lambda (x y z)
-               (cons (cons x (car z)) 
-                  (cons      
-                      (cond
-                         ((null y) (cadr z))
-                         (t(cons y (cadr z))))
-                  ())
-               )
-            ) (car lst) (cadr lst) (split(cddr lst)))
-          )
-       )
-)
-
-(print(split '( 10 2 4 2)))
-(print(split '( 9 7 3 )))
-(print(split '( 1  3 2 3 2 2 3 4 5)))
-(print(split '( 10 10 10 9 7 2 3 4 9 4 8 )))
-
-
 ;№15
 ;Определите функцию, вычисляющую скалярное произведение векторов, заданных списками целых чисел.
 (defun cross-prod(v1 v2)
@@ -97,58 +152,3 @@
 )
 (print(cross-prod '(2 3 5) '(3 7 9)))
 
-;№18
-;Определите предикат, проверяющий, является ли аргумент одноуровневым списком.
-(defun check-list(lst)
-      (cond
-         ((null lst) t)
-          ((atom (car lst))(check-list(cdr lst)))
-          (t(print 'False))
-       )
-)
-(print(check-list '((2))))
-(print(check-list '(2 (8) ((7)))))
-(print(check-list '(2 8 7)))
-
-;№21 
-;Определите функцию, удаляющую из списка первое вхождение данного элемента на верхнем уровне.
-(defun del-elem(lst)
-      (cond
-         ((null lst)  nil)
-          (t(cdr lst))
-       )
-)
-(print(del-elem '(2 8 5 (3))))
-
-;№22
-;Определите функцию, которая обращает список (а b с) и разбивает его на уровни (((с) b) а).
-(defun level-list(lst)
-      (cond
-         ((null(cdr  lst)) (cons (car lst) ()))
-         (t(list (level-list (cdr lst)) (car lst) ))
-       )
-)
-(print(level-list '( 1 2  3 4 5 6  7 8  9 )))                
-(print(level-list '( 1  2 )))
-
-;№33
-;Определите функцию МНОЖЕСТВО, преобразующую список в множество.
-(defun list-line(lst)
-      (cond
-         ((null lst) nil)
-          ((listp (car lst))(append (list-line(car lst)) (list-line(cdr lst)) ))
-          (t(cons (car lst) (list-line(cdr lst))))
-       )
-)
-
-(defun list-set(lst)
-      (cond
-         ((null lst) nil)
-          ((member (car lst) (cdr lst))(list-set(cdr lst)))
-          (t(cons (car lst) (list-set(cdr lst))))
-       )
-)
-
-(print(list-set (list-line '( 1 2  3 4 5 6  7 8  9 8 7 6 5 4 3 2 1))))
-(print(list-set (list-line '((3) 2 (8) ((7)) (3) 8))))
-                
