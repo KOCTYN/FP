@@ -65,17 +65,27 @@
 ;№9
 ;Определите функцию, разделяющую исходный список на два подсписка. 
 ;В первый из них должны попасть элементы с нечетными номерами, во второй — элементы с четными номерами.
-(defun sub-lists(lst)
+(defun split(lst)
       (cond
          ((null lst) '(() ()))
-         ( (evenp (car lst)) (cons (car (sub-lists(cdr lst))) (cons (cons (car lst)   (cadr (sub-lists(cdr lst))))())))
-         (t(cons (cons (car lst) (car (sub-lists(cdr lst))))   (cdr (sub-lists(cdr lst)))))
+         (t((lambda (x y z)
+               (cons (cons x (car z)) 
+                  (cons      
+                      (cond
+                         ((null y) (cadr z))
+                         (t(cons y (cadr z))))
+                  ())
+               )
+            ) (car lst) (cadr lst) (split(cddr lst)))
+          )
        )
 )
-(print(sub-lists '( 1 2  3 4 5 6  7 8  9 )))
-(print(sub-lists '( 10 2 4 )))
-(print(sub-lists '( 9 7 3 )))
-(print(sub-lists '( 10  9 7 2 3 4 9 4 8 )))
+
+(print(split '( 10 2 4 2)))
+(print(split '( 9 7 3 )))
+(print(split '( 1  3 2 3 2 2 3 4 5)))
+(print(split '( 10 10 10 9 7 2 3 4 9 4 8 )))
+
 
 ;№15
 ;Определите функцию, вычисляющую скалярное произведение векторов, заданных списками целых чисел.
