@@ -66,24 +66,36 @@
 
 ;№33
 ;Определите функцию МНОЖЕСТВО, преобразующую список в множество.
-(defun list-line(lst)
+(defun app(lst1 lst2)
       (cond
-         ((null lst) nil)
-          ((listp (car lst))(append (list-line(car lst)) (list-line(cdr lst)) ))
-          (t(cons (car lst) (list-line(cdr lst))))
+         ((null lst1) lst2)
+         (t(cons (car lst1) (app (cdr lst1) lst2)))
        )
 )
 
-(defun list-set(lst)
+(defun list-line(lst)
+    ((lambda (x y)
       (cond
          ((null lst) nil)
-          ((member (car lst) (cdr lst))(list-set(cdr lst)))
-          (t(cons (car lst) (list-set(cdr lst))))
+          ((listp x)(app (list-line x) (list-line y) ))
+          (t(cons x (list-line y)))
        )
-)
+     )(car lst)(cdr lst)
+))
+
+(defun list-set(lst)
+    ((lambda (x y)
+      (cond
+         ((null lst) nil)
+          ((member x y)(list-set y))
+          (t(cons x (list-set y)))
+       )
+    )(car lst)(cdr lst)
+))
 
 (print(list-set (list-line '( 1 2  3 4 5 6  7 8  9 8 7 6 5 4 3 2 1))))
 (print(list-set (list-line '((3) 2 (8) ((7)) (3) 8))))
+
                 
 ;№6
 ;Определите функцию, переводящую список чисел в список соответствующих им названий.
