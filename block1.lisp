@@ -1,3 +1,43 @@
+;№46
+;Предположим, что отец и мать некоторого лица, хранятся как значения соответствующих свойств у символа, обозначающего это лицо. 
+;Напишите функцию (РОДИТЕЛИ x), которая возвращает в качестве значения родителей, и предикат (СЕСТРЫ-БРАТЬЯ x1 x2),
+;который истинен в случае, если x1 и x2 — сестры или братья, родные или с одним общим родителем.
+( setf ( get 'C 'mother) 'A)         
+( setf ( get 'C 'father) 'B)                     
+                                  
+( setf ( get 'H 'mother) 'E)
+( setf ( get 'H 'father) 'R)
+
+( setf ( get 'K 'mother) 'M)
+( setf ( get 'K 'father) 'N)
+
+( setf ( get 'Q 'mother) 'M)
+( setf ( get 'Q 'father) 'N)
+
+(defun parents(x)
+      (cond
+         (t(symbol-plist x))
+      )
+)
+
+(defun sisters-brothers(x1 x2)
+      (cond
+         (t(STRING= (get x1 'father) (get x2 'father)))
+         (t(STRING= (get x1 'mother) (get x2 'mother)))
+      )
+)
+
+; A  B      E  R      M  N
+;  \/        \/        \/
+;  С         H        K  Q
+
+(print(parents 'C))
+(print(parents 'H))
+(print(parents 'Q))
+(print(parents 'K))
+
+(print(sisters-brothers 'H 'K))
+(print(sisters-brothers 'K 'Q))
 
 ;№9
 ;Определите функцию, разделяющую исходный список на два подсписка. 
