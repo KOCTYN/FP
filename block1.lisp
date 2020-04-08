@@ -42,7 +42,7 @@
     ((lambda (x y)
       (cond
          ((null lst) nil)
-          ((listp x)(cons (del-elem x elem) (del-elem y elem) ))
+          ((listp x)(cons x (del-elem y elem) ))
           ((= (car elem) x) y)
           (t(cons x (del-elem y elem)))
        )
