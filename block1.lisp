@@ -103,7 +103,7 @@
       (cond
          ((null lst) t)
           ((atom (car lst))(check-list(cdr lst)))
-          (t())
+          (t(print 'False))
        )
 )
 (print(check-list '((2))))
