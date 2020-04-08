@@ -1,3 +1,15 @@
+;42
+;Определите функцию, находящую максимальное из значений, находящихся в вершинах дерева.
+(defun tree(lst)
+         (if (and (null (cadr lst)) (null (caddr lst)))
+             (car lst)         
+             (max (max (tree (cadr lst)) (car lst))  (tree (caddr lst)))
+         )
+)
+
+(print(tree '(3 (4 nil nil)(5(3 nil nil)(2 nil nil)))))
+(print(tree '(5 (3 (1 nil nil)(4 nil nil))(7(6 nil nil)(13(11 nil nil)(15 nil nil)))) ))
+
 ;№47
 ;Определите функцию УДАЛИТЬ-ВСЕ-СВОЙСТВА, которая удаляет все свойства символа.
 ( setf ( get 'x 'a) 1)
