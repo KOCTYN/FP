@@ -23,16 +23,16 @@
 ( setf ( get 'x 'f) 9999)
 ( setf ( get 'x 'g) 0.1)
 
-(defun УДАЛИТЬ-ВСЕ-СВОЙСТВА(lst x)
+(defun УДАЛИТЬ-ВСЕ-СВОЙСТВА(x)
       (cond
-         ((null lst)())
-         (t(remprop x (car lst))(УДАЛИТЬ-ВСЕ-СВОЙСТВА (cddr lst) x))
+         ((null (symbol-plist 'x))())
+         (t(remprop x (car (symbol-plist 'x)))(УДАЛИТЬ-ВСЕ-СВОЙСТВА x))
        )
 )
 
 (print(symbol-plist 'x))
-(print(УДАЛИТЬ-ВСЕ-СВОЙСТВА (symbol-plist 'Света) 'Света))
-(print(symbol-plist 'Света))
+(print(УДАЛИТЬ-ВСЕ-СВОЙСТВА 'x))
+(print(symbol-plist 'x))
 
 ;№46
 ;Предположим, что отец и мать некоторого лица, хранятся как значения соответствующих свойств у символа, обозначающего это лицо. 
@@ -81,29 +81,7 @@
 (print(sisters-brothers 'H 'K))
 (print(sisters-brothers 'K 'Q))
 
-;№9
-;Определите функцию, разделяющую исходный список на два подсписка. 
-;В первый из них должны попасть элементы с нечетными номерами, во второй — элементы с четными номерами.
-(defun split(lst)
-      (cond
-         ((null lst) '(() ()))
-         (t((lambda (x y z)
-               (cons (cons x (car z)) 
-                  (cons      
-                      (cond
-                         ((null y) (cadr z))
-                         (t(cons y (cadr z))))
-                  ())
-               )
-            ) (car lst) (cadr lst) (split(cddr lst)))
-          )
-       )
-)
 
-(print(split '( 10 2 4 2)))
-(print(split '( 9 7 3 )))
-(print(split '( 1  3 2 3 2 2 3 4 5)))
-(print(split '( 10 10 10 9 7 2 3 4 9 4 8 )))
 
 ;№18
 ;Определите предикат, проверяющий, является ли аргумент одноуровневым списком.
@@ -111,7 +89,7 @@
       (cond
          ((null lst) t)
           ((atom (car lst))(check-list(cdr lst)))
-          (t(print 'False))
+          (t())
        )
 )
 (print(check-list '((2))))
@@ -124,27 +102,15 @@
     ((lambda (x y)
       (cond
          ((null lst) nil)
-          ((listp x)(cons x (del-elem y elem) ))
-          ((= (car elem) x) y)
+          ((= elem x) y)
           (t(cons x (del-elem y elem)))
        )
      )(car lst)(cdr lst)
 ))
 
-(print(del-elem '(4 2 (4) 6 2 4 (2)) '(4)))
-(print(del-elem '((9 3) 5 (3 (2 5) 3) 8 2 5 2 (3)) '(2)))
+(print(del-elem '(4 2 6 2 4 ) 4))
+(print(del-elem '(8 2 5 2 7 9 4 2) 2))
 
-
-;№22
-;Определите функцию, которая обращает список (а b с) и разбивает его на уровни (((с) b) а).
-(defun level-list(lst)
-      (cond
-         ((null(cdr  lst)) (cons (car lst) ()))
-         (t(list (level-list (cdr lst)) (car lst) ))
-       )
-)
-(print(level-list '( 1 2  3 4 5 6  7 8  9 )))                
-(print(level-list '( 1  2 )))
 
 ;№33
 ;Определите функцию МНОЖЕСТВО, преобразующую список в множество.
@@ -178,6 +144,59 @@
 (print(list-set (list-line '( 1 2  3 4 5 6  7 8  9 8 7 6 5 4 3 2 1))))
 (print(list-set (list-line '((3) 2 (8) ((7)) (3) 8))))
 
+;№17
+;Создайте предикат, порождающий всевозможные перестановки исходного множества.
+(defun insert-elem-in-each-position (elem list)
+	(cond
+		((null list) (list elem))
+		((atom list) (insert-elem-in-each-position elem (list list)))
+		(t (cons (cons elem list)
+			     (insert-elem-in-each-position-aux elem nil list)))
+	)
+)
+
+(defun insert-elem-in-each-position-aux (elem list1 list2)
+	(cond
+		((null list2) nil)
+		(t
+			((lambda (a)
+				(cons
+					(append (car a) (list elem) (cadr a))
+					((lambda (x)
+						(insert-elem-in-each-position-aux elem
+							(first x)
+							(second x)))
+					a))
+			)
+			((lambda (list1 list2)
+				(list (append list1 (list (car list2))) (cdr list2)))
+			list1 list2)))
+		)
+	)
+
+(defun add-elem-for-each-permutation (elem perm-lst)
+	(cond
+		((null perm-lst) nil)
+		(t (append
+				(insert-elem-in-each-position elem (car perm-lst))
+				(add-elem-for-each-permutation elem (cdr perm-lst))))
+	)
+)
+
+(defun my-permutation (lst)
+	(cond
+		((null lst) nil)
+		((null (cdr lst)) (list lst))
+		(t (add-elem-for-each-permutation
+			(car lst)
+			(my-permutation (cdr lst))))
+	)
+)
+
+(print (my-permutation '(1 2 3)))
+
+
+;------------------------------------------------ПРИНЯТЫЕ-----------------------------------------------
                 
 ;№6
 ;Определите функцию, переводящую список чисел в список соответствующих им названий.
@@ -252,4 +271,40 @@
        )
 )
 (print(cross-prod '(2 3 5) '(3 7 9)))
+
+;№9
+;Определите функцию, разделяющую исходный список на два подсписка. 
+;В первый из них должны попасть элементы с нечетными номерами, во второй — элементы с четными номерами.
+(defun split(lst)
+      (cond
+         ((null lst) '(() ()))
+         (t((lambda (x y z)
+               (cons (cons x (car z)) 
+                  (cons      
+                      (cond
+                         ((null y) (cadr z))
+                         (t(cons y (cadr z))))
+                  ())
+               )
+            ) (car lst) (cadr lst) (split(cddr lst)))
+          )
+       )
+)
+
+(print(split '( 10 2 4 2)))
+(print(split '( 9 7 3 )))
+(print(split '( 1  3 2 3 2 2 3 4 5)))
+(print(split '( 10 10 10 9 7 2 3 4 9 4 8 )))
+
+
+;№22
+;Определите функцию, которая обращает список (а b с) и разбивает его на уровни (((с) b) а).
+(defun level-list(lst)
+      (cond
+         ((null(cdr  lst)) (cons (car lst) ()))
+         (t(list (level-list (cdr lst)) (car lst) ))
+       )
+)
+(print(level-list '( 1 2  3 4 5 6  7 8  9 )))                
+(print(level-list '( 1  2 )))
 
