@@ -50,10 +50,16 @@
 ( setf ( get 'Q 'mother) 'M)
 ( setf ( get 'Q 'father) 'N)
 
+(defun get-mother(x)
+    (get x 'mother)
+)
+
+(defun get-father(x)
+    (get x 'father)
+)
+
 (defun parents(x)
-      (cond
-         (t(symbol-plist x))
-      )
+    (list (get-mother x) (get-father x))
 )
 
 (defun sisters-brothers(x1 x2)
