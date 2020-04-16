@@ -82,17 +82,25 @@
 ;№21 
 ;Определите функцию, удаляющую из списка первое вхождение данного элемента на верхнем уровне.
 (defun del-elem(lst elem)
-    ((lambda (x y)
-      (cond
-         ((null lst) nil)
-          ((= elem x) y)
-          (t(cons x (del-elem y elem)))
-       )
-     )(car lst)(cdr lst)
-))
+    (cond
+      ((null lst) nil)
+      (t
+       ((lambda (x y)
+        ((lambda (z)
+         (cond
+          ((null lst) nil)
+          ((listp x)(cons (del-elem x elem) z))
+          ((= (car elem) x) y)
+          (t(cons x z ))
+         ))(del-elem y elem))
+       )(car lst)(cdr lst))
+     )
+   )
+)
 
-(print(del-elem '(4 2 6 2 4 ) 4))
-(print(del-elem '(8 2 5 2 7 9 4 2) 2))
+(print(del-elem '(4 2 (4) 6 2 4 (2)) '(4)))
+(print(del-elem '((9 3) 5 (3 (2 5) 3) 8 2 5 2 (3)) '(2)))
+
 
 
 ;№33
