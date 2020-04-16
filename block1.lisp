@@ -90,13 +90,14 @@
 (defun check-list(lst)
       (cond
          ((null lst) t)
-          ((atom (car lst))(check-list(cdr lst)))
-          (t())
+          ((listp (car lst)) NIL)
+          (t(check-list(cdr lst)))
        )
 )
 (print(check-list '((2))))
 (print(check-list '(2 (8) ((7)))))
 (print(check-list '(2 8 7)))
+
 
 ;№21 
 ;Определите функцию, удаляющую из списка первое вхождение данного элемента на верхнем уровне.
