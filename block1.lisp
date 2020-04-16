@@ -65,10 +65,7 @@
 )
 
 (defun sisters-brothers(x1 x2)
-      (cond
-         (t(STRING= (get x1 'father) (get x2 'father)))
-         (t(STRING= (get x1 'mother) (get x2 'mother)))
-      )
+    (if (and (STRING= (get x1 'father) (get x2 'father)) (STRING= (get x1 'mother) (get x2 'mother))) t)
 )
 
 ; A  B      E  R      M  N
@@ -82,8 +79,6 @@
 
 (print(sisters-brothers 'H 'K))
 (print(sisters-brothers 'K 'Q))
-
-
 
 ;№18
 ;Определите предикат, проверяющий, является ли аргумент одноуровневым списком.
