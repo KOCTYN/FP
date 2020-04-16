@@ -118,24 +118,39 @@
 )
 
 (defun list-line(lst)
-    ((lambda (x y)
-      (cond
-         ((null lst) nil)
-          ((listp x)(app (list-line x) (list-line y) ))
-          (t(cons x (list-line y)))
+    (cond
+      ((null lst) nil)
+      (t
+        ((lambda (x y)
+          ((lambda (z)
+            (cond
+              ((null lst) nil)
+              ((listp x)(app (list-line x) z ))
+              (t(cons x z))
+             )
+            )(list-line y))
+         )(car lst)(cdr lst)
+        )
        )
-     )(car lst)(cdr lst)
-))
+     )
+)
 
 (defun list-set(lst)
-    ((lambda (x y)
-      (cond
-         ((null lst) nil)
-          ((member x y)(list-set y))
-          (t(cons x (list-set y)))
-       )
-    )(car lst)(cdr lst)
-))
+    (cond
+      ((null lst) nil)
+        (t
+      ((lambda (x y)
+        ((lambda (z)
+          (cond
+           ((null lst) nil)
+           ((member x y)z)
+           (t(cons x z))
+          )
+         )(list-set y))
+       )(car lst)(cdr lst)
+      )
+    ))
+)
 
 (print(list-set (list-line '( 1 2  3 4 5 6  7 8  9 8 7 6 5 4 3 2 1))))
 (print(list-set (list-line '((3) 2 (8) ((7)) (3) 8))))
