@@ -25,9 +25,9 @@
 ;Предположим, что отец и мать некоторого лица, хранятся как значения соответствующих свойств у символа, обозначающего это лицо. 
 ;Напишите функцию (РОДИТЕЛИ x), которая возвращает в качестве значения родителей, и предикат (СЕСТРЫ-БРАТЬЯ x1 x2),
 ;который истинен в случае, если x1 и x2 — сестры или братья, родные или с одним общим родителем.
-( setf ( get 'C 'mother) 'A)         
-( setf ( get 'C 'father) 'B)                     
-                                  
+( setf ( get 'C 'mother) 'A)
+( setf ( get 'C 'father) 'B)
+
 ( setf ( get 'H 'mother) 'E)
 ( setf ( get 'H 'father) 'R)
 
@@ -38,24 +38,29 @@
 ( setf ( get 'Q 'father) 'N)
 
 (defun get-mother(x)
-    (get x 'mother)
+(get x 'mother)
 )
 
 (defun get-father(x)
-    (get x 'father)
+(get x 'father)
 )
 
 (defun parents(x)
-    (list (get-mother x) (get-father x))
+(list (get-mother x) (get-father x))
 )
 
 (defun sisters-brothers(x1 x2)
-    (if (and (STRING= (get x1 'father) (get x2 'father)) (STRING= (get x1 'mother) (get x2 'mother))) t)
+    (cond
+        ((STRING= (get x1 'father) (get x2 'father))t)
+        ((STRING= (get x1 'mother) (get x2 'mother))t)
+        (t nil)
+    )
 )
 
 ; A  B      E  R      M  N
 ;  \/        \/        \/
 ;  С         H        K  Q
+
 
 (print(parents 'C))
 (print(parents 'H))
