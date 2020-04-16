@@ -24,10 +24,12 @@
 ( setf ( get 'x 'g) 0.1)
 
 (defun УДАЛИТЬ-ВСЕ-СВОЙСТВА(x)
+    ((lambda (y)
       (cond
-         ((null (symbol-plist 'x))())
-         (t(remprop x (car (symbol-plist 'x)))(УДАЛИТЬ-ВСЕ-СВОЙСТВА x))
+         ((null y)())
+         (t(remprop x (car y))(УДАЛИТЬ-ВСЕ-СВОЙСТВА x))
        )
+      )(symbol-plist 'x))
 )
 
 (print(symbol-plist 'x))
