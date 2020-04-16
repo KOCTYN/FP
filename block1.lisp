@@ -1,18 +1,3 @@
-;42
-;Определите функцию, находящую максимальное из значений, находящихся в вершинах дерева.
-(defun tree(lst)
-         ((lambda (x l r)
-          (if (and (null l) (null r))
-             x         
-             (max (max (tree l) x)  (tree r))
-          )
-         )(car lst)(cadr lst)(caddr lst)
-))
-
-(print(tree '(3 (4 nil nil)(5(3 nil nil)(2 nil nil)))))
-(print(tree '(5 (3 (1 nil nil)(4 nil nil))(7(6 nil nil)(13(11 nil nil)(15 nil nil)))) ))
-
-
 ;№47
 ;Определите функцию УДАЛИТЬ-ВСЕ-СВОЙСТВА, которая удаляет все свойства символа.
 ( setf ( get 'x 'a) 1)
@@ -306,3 +291,16 @@
 (print(level-list '( 1 2  3 4 5 6  7 8  9 )))                
 (print(level-list '( 1  2 )))
 
+;42
+;Определите функцию, находящую максимальное из значений, находящихся в вершинах дерева.
+(defun tree(lst)
+         ((lambda (x l r)
+          (if (and (null l) (null r))
+             x         
+             (max (max (tree l) x)  (tree r))
+          )
+         )(car lst)(cadr lst)(caddr lst)
+))
+
+(print(tree '(3 (4 nil nil)(5(3 nil nil)(2 nil nil)))))
+(print(tree '(5 (3 (1 nil nil)(4 nil nil))(7(6 nil nil)(13(11 nil nil)(15 nil nil)))) ))
