@@ -160,39 +160,26 @@
 
 ;№17
 ;Создайте предикат, порождающий всевозможные перестановки исходного множества.
-(defun insert-elem-in-each-position (elem list)
-	(cond
-		((null list) (list elem))
-		((atom list) (insert-elem-in-each-position elem (list list)))
-		(t (cons (cons elem list)
-			     (insert-elem-in-each-position-aux elem nil list)))
-	)
-)
 
-(defun insert-elem-in-each-position-aux (elem list1 list2)
-	(cond
-		((null list2) nil)
-		(t
-			((lambda (a)
-				(cons
-					(append (car a) (list elem) (cadr a))
-					((lambda (x)
-						(insert-elem-in-each-position-aux elem
-							(first x)
-							(second x)))
-					a))
-			)
-			((lambda (list1 list2)
-				(list (append list1 (list (car list2))) (cdr list2)))
-			list1 list2)))
-		)
-	)
+
+(defun insert-elem-in-all-position (a l r)
+  (cond 
+      ((null r) (list (append l (list a))))
+      (t
+          (cons 
+               (append l (list a) r) 
+               (insert-elem-in-all-position a (append l (list (car r))) (cdr r))
+           )
+       )
+   )
+)
+ 
 
 (defun add-elem-for-each-permutation (elem perm-lst)
 	(cond
 		((null perm-lst) nil)
 		(t (append
-				(insert-elem-in-each-position elem (car perm-lst))
+				(insert-elem-in-all-position elem nil (car perm-lst))
 				(add-elem-for-each-permutation elem (cdr perm-lst))))
 	)
 )
