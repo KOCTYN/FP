@@ -109,6 +109,7 @@
 
 ;№33
 ;Определите функцию МНОЖЕСТВО, преобразующую список в множество.
+;функция объединение списков, аналог append
 (defun app(lst1 lst2)
       (cond
          ((null lst1) lst2)
@@ -116,7 +117,8 @@
        )
 )
 
-(defun list-line(lst)
+;функция убирает вложеные списки (((a)) (b) c)->(a b c)
+(defun list-line(lst)     
     (cond
       ((null lst) nil)
       (t
@@ -134,6 +136,7 @@
      )
 )
 
+;функция убирает повторяющиеся элементы
 (defun list-set(lst)
     (cond
       ((null lst) nil)
@@ -153,7 +156,6 @@
 
 (print(list-set (list-line '( 1 2  3 4 5 6  7 8  9 8 7 6 5 4 3 2 1))))
 (print(list-set (list-line '((3) 2 (8) ((7)) (3) 8))))
-
 
 
 ;№17
