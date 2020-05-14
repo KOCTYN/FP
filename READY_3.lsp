@@ -25,6 +25,8 @@
 (print (iff (> 2 3) 3 5))
 (print (iff (< 2 3) 3 5))
 
+;№4
+;Определите в виде макроса форму (FIF тест отр нуль полож)
 (defmacro fif (test negative zero positive)
      (list
           'cond
@@ -34,8 +36,6 @@
       )
 )
 
-;№4
-;Определите в виде макроса форму (FIF тест отр нуль полож)
 (print (fif -5 -1 0 1))
 (print (fif 0 -1 0 1))
 (print (fif 5 -1 0 1))
