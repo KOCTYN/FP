@@ -28,11 +28,11 @@
 ;№4
 ;Определите в виде макроса форму (FIF тест отр нуль полож)
 (defmacro fif (test negative zero positive)
-     (list
-          'cond
-          (list (list '< test 0) negative)
-          (list (list '> test 0) positive)
-          (list t zero)
+     `(
+          cond
+          (( < ,test 0) ,negative)
+          (( > ,test 0) ,positive)
+          (,t ,zero)
       )
 )
 
@@ -43,10 +43,10 @@
 ;№5
 ;Определите в виде макроса форму (REPEAT e UNTIL p) паскалевского типа.
 (defmacro repeat (e until p)
-    (list
-         'cond
-         (list p (list 'and (list 'print e) (list 'repeat e 'until p)))
-         (list t ())
+    `(
+         cond
+         ( ,p ( and ( print ,e) ( repeat ,e until ,p)))
+         ( ,t ())
      )
 )
 
