@@ -3,11 +3,11 @@
 ;Определите макрос (POP стек), который читает из стека верхний элемент и
 ;меняет значение переменной стека.
 (defmacro new_pop (lst)
-     (list 
-          'let 
-          (list (list 'temp (list 'car lst))) 
-          (list 'setq lst (list 'cdr lst)) 
-          'temp)
+     `( 
+          let 
+          ( ( temp ( car ,lst))) 
+          ( setq ,lst (cdr ,lst)) 
+          temp)
 )
 
 (setq steck (list 1 2 3 4))
@@ -20,7 +20,7 @@
 
 ;№3
 ;Определите лисповскую форму (IF условие p q) в виде макроса.
-(defmacro iff (f p q)(list 'if f p q))
+(defmacro iff (f p q)`(if ,f ,p ,q))
 
 (print (iff (> 2 3) 3 5))
 (print (iff (< 2 3) 3 5))
