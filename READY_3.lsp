@@ -1,6 +1,6 @@
 ;№1
 ;Определите макрос, который возвращает свой вызов.
-(defmacro self () ''(self))
+(defmacro self () `'(self))
 (print (self))
 
 ;№2
