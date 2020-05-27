@@ -228,7 +228,7 @@ a = 2 # => 2
 
 Полезный сылки:
 
-1)[официальный сайт](https://elixir-lang.org/) официальный сайт
+1)[официальный сайт](https://elixir-lang.org/)
 
 2)[как установить Elixir](https://elixir-lang.org/install.html)
 
