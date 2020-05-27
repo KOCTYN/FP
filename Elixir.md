@@ -224,3 +224,14 @@ a = 1 # => 1
 a = 2 # => 2
 ^a = 3 # => ** (MatchError) no match of right hand side value: 3
 ```
+
+
+Полезный сылки:
+
+1)[официальный сайт](https://elixir-lang.org/) официальный сайт
+
+2)[как установить Elixir](https://elixir-lang.org/install.html)
+
+3)[как начать пользоваться Elixir](https://elixir-lang.org/getting-started/introduction.html) 
+
+4)[Уроки программирования на языке Elixir](https://elixirschool.com/ru/) 
